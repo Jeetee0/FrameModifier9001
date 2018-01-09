@@ -17,7 +17,7 @@
 
 //todo: create executable of program
 
-//tasks for "post abgabe"
+//tasks for "post abgabe":
 //todo: implement mirror buttons
 
 
@@ -277,6 +277,22 @@ void MainWindow::on_bt_preview_clicked()
         return;
     //starts preview mode, showing each frame with set delaytime
     PreviewFrames();
+}
+
+//show infos about author and easier usage
+void MainWindow::on_bt_info_clicked()
+{
+    QMessageBox info;
+    //read in to info.txt file
+    try {
+        QFile file(":/info.txt");
+        file.open(QFile::ReadOnly);
+        QString infoMessage = file.readAll();
+        info.setText(infoMessage);
+    } catch (std::exception &e) {
+        info.setText("Could not read info.txt");
+    }
+    info.exec();
 }
 
 //this method activates preview mode, for a limited time nothing can be interacted with
@@ -3449,18 +3465,4 @@ void MainWindow::on_radioButton_16_15_toggled(bool checked)
 void MainWindow::on_radioButton_16_16_toggled(bool checked)
 {
     currentPinArray[16-1][16-1] = checked;
-}
-
-//show infos about author and easier usage
-void MainWindow::on_bt_info_clicked()
-{
-    QString infoMessage = "error reading info.txt";
-    //read in info file
-    try {
-        QFile file("info.txt");
-        infoMessage = file.readAll();
-    }
-    QMessageBox info;
-    info.setText(infoMessage);
-    info.exec();
 }

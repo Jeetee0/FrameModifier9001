@@ -649,6 +649,8 @@ private slots:
 
     void keyReleaseEvent(QKeyEvent* ke);
 
+    void on_bt_info_clicked();
+
 private:
     Ui::MainWindow *ui;
 };
