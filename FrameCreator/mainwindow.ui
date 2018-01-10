@@ -4887,4 +4887,7 @@
  <layoutdefault spacing="6" margin="11"/>
  <resources/>
  <connections/>
+ <slots>
+  <slot>doubleClick()</slot>
+ </slots>
 </ui>

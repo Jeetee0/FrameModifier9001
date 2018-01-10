@@ -12,6 +12,8 @@ from luma.core.legacy.font import proportional, CP437_FONT, TINY_FONT, SINCLAIR_
 # create matrix device
 serial = spi(port=0, device=0, gpio=noop())
 device = max7219(serial, cascaded=4, block_orientation=90, rotate=0)
+deviceText = max7219(serial, cascaded=2, block_orientation=90, rotate=0)
+
 
 def print_8x8(symbol, xStartpoint):
     x = xStartpoint # x & y define startpoints of matrixes 
@@ -67,4 +69,6 @@ def print_16x16(symbol):
                 byte >>= 1
             x += 1
 
+def printText(message):
+    show_message(deviceText, message, fill="white", font=proportional(CP437_FONT))
 
