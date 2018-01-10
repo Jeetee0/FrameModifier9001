@@ -3,13 +3,14 @@ FrameCreator:
 This Program was written for the lecture "Vertiefung Programmieren" in fifth semester at the HTW Berlin.
 It was created with Qt creator using Qt 5.10.0 MinGW 32bit.
 
-With the program you can easily design patterns that can then transferred to some "max7219 8x8LED matrixes". 
-In my example I am using 2x2 matrixes, resulting in a 16x16 LED matrix.
+With the program you can easily design patterns that can then transferred to four "max7219 8x8LED matrixes". 
+In my example I am using 2x2 matrix layout, resulting in a 16x16 LED matrix.
 
 - for easier usage you can use the "+" key on your keyboard to add frames.
 - the delaytime will be the time waited before a new frame gets printed to the matrixes
 - preview mode gives an insight how it will roughly look on the matrixes
 - you can save specific sequences and build them all together when using the load - append function.
+- please give your frames for a sequence names, the program will be confused when there are names twice (especially when appending sequences to existing project)
 
 
 You can export your project to get a frames.txt file that can then interpreted by my python library on a raspberry pi.

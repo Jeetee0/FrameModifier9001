@@ -18,8 +18,10 @@
 //todo: create executable of program
 
 //tasks for "post abgabe":
-//todo: implement mirror buttons
+// implement mirror buttons
+// debug version can read frames, release version cant
 
+//copy to rasp: pscp Desktop\frames.txt pi@192.168.178.30:Projects/FrameModifier9001/FrameViewer
 
 //variables
 std::vector<Frame> vectorOfFrames;
@@ -86,6 +88,8 @@ void MainWindow::on_bt_load_clicked()
     QAbstractButton* pButtonAppend = msgBox.addButton(tr("Append"), QMessageBox::YesRole);
     QAbstractButton* pButtonLoad = msgBox.addButton(tr("Load"), QMessageBox::YesRole);
     QAbstractButton* pButtonCancel = msgBox.addButton(tr("Cancel"), QMessageBox::YesRole);
+    if (vectorOfFrames.size() < 1)
+        pButtonAppend->setEnabled(false);
     msgBox.setDefaultButton(QMessageBox::Yes);
     msgBox.exec();
 
@@ -520,7 +524,7 @@ bool MainWindow::exportFile(QString fileName) {
 void MainWindow::loadFile(QString fileName, bool append) {
     qDebug() << "reading from" << fileName;
     QFile file(fileName);
-    int framesAdded;
+    int framesAdded = 0;
 
     if (!append) {
         vectorOfFrames.clear();
@@ -591,26 +595,27 @@ void MainWindow::loadFile(QString fileName, bool append) {
             ui->lineEdit_totalAmount->setText(QString::number(vectorOfFrames.size()));
 
             file.close();
+
+            QMessageBox msgBox;
+            if (append)
+                msgBox.setText("Successfully loaded your Project.\nYour opened Project has been expanded by " + QString::number(framesAdded) + " Frames.");
+            else
+                msgBox.setText("Successfully loaded your Project.\nIt contained " + QString::number(framesAdded) + " Frames.");
+            msgBox.exec();
+
+            //set first frame to radioButtons
+            currentFrame = *(vectorOfFrames.begin());
+            ui->listWidget->setCurrentIndex(ui->listWidget->model()->index(0, 0));
+            setPinFrameFromArray(vectorOfFrames.begin()->pinFrame);
+
         } catch(std::exception &e) {
             QMessageBox info;
             info.setText("The .txt file could not be parsed.\n");
             info.exec();
         }
-
     }
 
-    QMessageBox msgBox;
-    if (append)
-        msgBox.setText("Successfully loaded your Project.\nYour opened Project has been expanded by " + QString::number(framesAdded) + " Frames.");
-    else
-        msgBox.setText("Successfully loaded your Project.\nIt contained " + QString::number(framesAdded) + " Frames.");
-    msgBox.exec();
 
-
-    //set first frame to radioButtons
-    currentFrame = *(vectorOfFrames.begin());
-    ui->listWidget->setCurrentIndex(ui->listWidget->model()->index(0, 0));
-    setPinFrameFromArray(vectorOfFrames.begin()->pinFrame);
 }
 
 //method to pause the application (used for preview)
@@ -637,6 +642,7 @@ void MainWindow::enableOrDisableEditButtons(bool enable) {
     ui->bt_export->setEnabled(enable);
     ui->bt_InvertAll->setEnabled(enable);
     ui->bt_load->setEnabled(enable);
+    ui->bt_info->setEnabled(enable);
     ui->bt_new->setEnabled(enable);
     ui->bt_overwriteFrame->setEnabled(enable);
     ui->bt_preview->setEnabled(enable);
