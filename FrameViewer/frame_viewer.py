@@ -5,8 +5,8 @@ import argparse
 
 frameList = []
 
-def read_frame_list(delaytime):
-    file = open('frames.txt', 'r')
+def read_frame_list(filename, delaytime):
+    file = open(filename, 'r')
     # first line is delaytime
     global delay
     if (delaytime == 0):
@@ -36,7 +36,7 @@ def print_frame_list(cycles):
     round = 1
     
     print ("delay between frames: {} ms".format(delay*1000))
-    
+
     while (endless == True or roundsLeft >= 1):
         print('Round: {}/{}'.format(round, cycles))
         for frame in frameList:
@@ -50,15 +50,18 @@ def print_frame_list(cycles):
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description='2x2MatrixProject arguments',
         formatter_class=argparse.ArgumentDefaultsHelpFormatter)
-
+    
     parser.add_argument('--cycles', type=int, default=1, help='how often shall the program run? 0 for endless')
-    parser.add_argument('--delaytime', type=int, default=0, help='change delaytime (in ms)')
+    parser.add_argument('--delay', type=int, default=0, help='change delaytime (in ms)')
+    parser.add_argument('--filename', type=str, default='frames.txt', help='which .txt file should be executed - standard: frames.txt')
+    parser.add_argument('--msg', type=str, default='', help='message that gets displayed at the beginning')
 
-    args = parser.parse_args()
-    print("arguments: {}".format(args))
+    args = parser.parse_args()    
     
     try:
-        read_frame_list(args.delaytime)
+        if (args.msg != ''):
+            disco_activator.printText(args.msg)
+        read_frame_list(args.filename, args.delay)
         print_frame_list(args.cycles)
     except KeyboardInterrupt:
         pass    
