@@ -1,6 +1,6 @@
 import sys
 import time
-import disco_activator
+import frames_lib
 import argparse
 
 frameList = []
@@ -40,7 +40,7 @@ def print_frame_list(cycles):
     while (endless == True or roundsLeft >= 1):
         print('Round: {}/{}'.format(round, cycles))
         for frame in frameList:
-            disco_activator.print_16x16(frame)
+            frames_lib.print_16x16(frame)
             time.sleep(delay)
         
         roundsLeft -= 1
@@ -60,7 +60,7 @@ if __name__ == "__main__":
     
     try:
         if (args.msg != ''):
-            disco_activator.printText(args.msg)
+            frames_lib.printText(args.msg)
         read_frame_list(args.filename, args.delay)
         print_frame_list(args.cycles)
     except KeyboardInterrupt:
