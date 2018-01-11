@@ -21,7 +21,7 @@
 // implement mirror buttons
 // debug version can read frames, release version cant
 
-//copy to rasp: pscp Desktop\frames.txt pi@192.168.178.30:Projects/FrameModifier9001/FrameViewer
+//copy to rasp (windows): pscp Desktop\frames.txt pi@192.168.178.30:Projects/FrameModifier9001/FrameViewer
 
 //variables
 std::vector<Frame> vectorOfFrames;
