@@ -56,7 +56,8 @@ if __name__ == "__main__":
     parser.add_argument('--filename', type=str, default='frames.txt', help='which .txt file should be executed - standard: frames.txt')
     parser.add_argument('--msg', type=str, default='', help='message that gets displayed at the beginning')
 
-    args = parser.parse_args()    
+    args = parser.parse_args()  
+    print (args)  
     
     try:
         if (args.msg != ''):
