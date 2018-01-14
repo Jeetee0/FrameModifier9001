@@ -57,24 +57,27 @@ if __name__ == "__main__":
         print "%s already exists, exiting" % pidfile
         sys.exit()
     file(pidfile, 'w').write(pid)
+    
     # if not, start process
-    parser = argparse.ArgumentParser(description='2x2MatrixProject arguments',
-        formatter_class=argparse.ArgumentDefaultsHelpFormatter)
-    
-    parser.add_argument('--cycles', type=int, default=1, help='how often shall the program run? 0 for endless')
-    parser.add_argument('--delay', type=int, default=0, help='change delaytime (in ms)')
-    parser.add_argument('--filename', type=str, default='frames.txt', help='which .txt file should be executed - standard: frames.txt')
-    parser.add_argument('--msg', type=str, default='', help='message that gets displayed at the beginning')
-
-    args = parser.parse_args()  
-    print ("arguments: {}".format(args))  
-    
     try:
-        if (args.msg != ''):
-            frames_lib.printText(args.msg)
-        read_frame_list(args.filename, args.delay)
-        print_frame_list(args.cycles)
-    except KeyboardInterrupt:
-        pass
-    finally: # delete pid file again
+    	parser = argparse.ArgumentParser(description='2x2MatrixProject arguments',
+        	formatter_class=argparse.ArgumentDefaultsHelpFormatter)
+    
+    	parser.add_argument('--cycles', type=int, default=1, help='how often shall the program run? 0 for endless')
+    	parser.add_argument('--delay', type=int, default=0, help='change delaytime (in ms)')
+    	parser.add_argument('--filename', type=str, default='frames.txt', help='which .txt file should be executed - standard: frames.txt')
+    	parser.add_argument('--msg', type=str, default='', help='message that gets displayed at the beginning')
+
+    	args = parser.parse_args()  
+    	print ("arguments: {}".format(args))  
+    
+    	try:
+        	if (args.msg != ''):
+            	frames_lib.printText(args.msg)
+        	read_frame_list(args.filename, args.delay)
+        	print_frame_list(args.cycles)
+    	except KeyboardInterrupt:
+        	pass
+    # delete pid file again
+    finally: 
         os.unlink(pidfile)
