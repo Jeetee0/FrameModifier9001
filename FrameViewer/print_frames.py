@@ -1,4 +1,5 @@
 import sys
+import os
 import time
 import frames_lib
 import argparse
@@ -48,6 +49,15 @@ def print_frame_list(cycles):
         
         
 if __name__ == "__main__":
+    # check if process is already running
+    pid = str(os.getpid())
+    pidfile = "/tmp/print_frames.pid"
+
+    if os.path.isfile(pidfile):
+        print "%s already exists, exiting" % pidfile
+        sys.exit()
+    file(pidfile, 'w').write(pid)
+    # if not, start process
     parser = argparse.ArgumentParser(description='2x2MatrixProject arguments',
         formatter_class=argparse.ArgumentDefaultsHelpFormatter)
     
@@ -57,7 +67,7 @@ if __name__ == "__main__":
     parser.add_argument('--msg', type=str, default='', help='message that gets displayed at the beginning')
 
     args = parser.parse_args()  
-    print (args)  
+    print ("arguments: {}".format(args))  
     
     try:
         if (args.msg != ''):
@@ -65,4 +75,6 @@ if __name__ == "__main__":
         read_frame_list(args.filename, args.delay)
         print_frame_list(args.cycles)
     except KeyboardInterrupt:
-        pass    
+        pass
+    finally: # delete pid file again
+        os.unlink(pidfile)
