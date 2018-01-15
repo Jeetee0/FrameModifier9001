@@ -41,9 +41,9 @@ def print_frame_list(cycles, mirror):
     while (endless == True or roundsLeft >= 1):
         print('Round: {}/{}'.format(round, cycles))
         for frame in frameList:
-        	if mirror:
-        		frames_lib.print_32x32from16x16(frame)
-            elif:
+            if mirror:
+                frames_lib.print_32x32from16x16(frame)
+            else:
             	frames_lib.print_16x16(frame)
             time.sleep(delay)
         
@@ -77,7 +77,7 @@ if __name__ == "__main__":
     
     	try:
         	if (args.msg != ''):
-            	frames_lib.printText(args.msg)
+            		frames_lib.printText(args.msg)
         	read_frame_list(args.filename, args.delay)
         	print_frame_list(args.cycles, args.mirror)
     	except KeyboardInterrupt:
