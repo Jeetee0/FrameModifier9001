@@ -28,58 +28,13 @@ def read_frame_list(filename, delaytime):
         frameList.append(symbol)
     file.close()
 
-def print_frame_list(cycles, mirror):
-    endless = None
-    roundsLeft = cycles
-    if (cycles == 0):
-        endless = True
-        cycles = sys.maxint
-    round = 1
-    
-    print ("delay between frames: {} ms".format(delay*1000))
-
-    # start printing frames to matrixes
-    while (endless == True or roundsLeft >= 1):
-        print('Round: {}/{}'.format(round, cycles))
-        for frame in frameList:
-            frames_lib.print8x8(frame[0], 120)
-            time.sleep(delay)
-        
-        roundsLeft -= 1
-        round += 1
-        
-        
-if __name__ == "__main__":
-    # check if process is already running
-    pid = str(os.getpid())
-    pidfile = "/tmp/print_frames.pid"
-
-    if os.path.isfile(pidfile):
-        print "%s already exists, exiting" % pidfile
-        sys.exit()
-    file(pidfile, 'w').write(pid)
-    
-    # if not, start process
-    try:
-    	parser = argparse.ArgumentParser(description='2x2MatrixProject arguments',
-        	formatter_class=argparse.ArgumentDefaultsHelpFormatter)
-    
-    	parser.add_argument('--cycles', type=int, default=1, help='how often shall the program run? 0 for endless')
-    	parser.add_argument('--delay', type=int, default=0, help='change delaytime (in ms)')
-    	parser.add_argument('--filename', type=str, default='frames.txt', help='which .txt file should be executed - standard: frames.txt')
-    	parser.add_argument('--msg', type=str, default='', help='message that gets displayed at the beginning')
-    	parser.add_argument('--mirror', type=bool, default=True, help='mirrors symbol from 16x16 to 32x32')
-
-    	args = parser.parse_args()  
-    	print ("arguments: {}".format(args))  
-    
-    	try:
-        	if (args.msg != ''):
-            		frames_lib.printText(args.msg)
-        	read_frame_list(args.filename, args.delay)
-        	print_frame_list(args.cycles, args.mirror)
-    	except KeyboardInterrupt:
-        	pass
-    # delete pid file again
-    finally: 
-        os.unlink(pidfile)
+read_frame_list('frames.txt', 1000)
+x = 0
+for frame in frameList:
+    frames_lib.print_8x8(frame[0], x)
+    time.sleep(delay)
+    if x>120:
+        x=0
+    else:
+        x= x+8
+    print (x)
