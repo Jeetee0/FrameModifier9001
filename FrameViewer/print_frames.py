@@ -28,7 +28,7 @@ def read_frame_list(filename, delaytime):
         frameList.append(symbol)
     file.close()
 
-def print_frame_list(cycles):
+def print_frame_list(cycles, mirror):
     endless = None
     roundsLeft = cycles
     if (cycles == 0):
@@ -41,7 +41,10 @@ def print_frame_list(cycles):
     while (endless == True or roundsLeft >= 1):
         print('Round: {}/{}'.format(round, cycles))
         for frame in frameList:
-            frames_lib.print_16x16(frame)
+        	if mirror:
+        		frames_lib.print_32x32from16x16(frame)
+            elif:
+            	frames_lib.print_16x16(frame)
             time.sleep(delay)
         
         roundsLeft -= 1
@@ -67,6 +70,7 @@ if __name__ == "__main__":
     	parser.add_argument('--delay', type=int, default=0, help='change delaytime (in ms)')
     	parser.add_argument('--filename', type=str, default='frames.txt', help='which .txt file should be executed - standard: frames.txt')
     	parser.add_argument('--msg', type=str, default='', help='message that gets displayed at the beginning')
+    	parser.add_argument('--mirror', type=bool, default=True, help='mirrors symbol from 16x16 to 32x32')
 
     	args = parser.parse_args()  
     	print ("arguments: {}".format(args))  
@@ -75,7 +79,7 @@ if __name__ == "__main__":
         	if (args.msg != ''):
             	frames_lib.printText(args.msg)
         	read_frame_list(args.filename, args.delay)
-        	print_frame_list(args.cycles)
+        	print_frame_list(args.cycles, args.mirror)
     	except KeyboardInterrupt:
         	pass
     # delete pid file again
