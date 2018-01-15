@@ -74,7 +74,7 @@ def print_16x16(symbol):
 def print_32x32from16x16(symbol):
 	# if this loop ends all bits get send, so we have to set all LED's before
     with canvas(device) as draw:
-    	x, y = 0,0
+        x, y = 0,0
         for value in symbol[0]:
             byte = int(value,2)
             for j in range(8):

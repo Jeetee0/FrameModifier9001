@@ -38,6 +38,7 @@ def print_frame_list(cycles, mirror):
     
     print ("delay between frames: {} ms".format(delay*1000))
 
+    # start printing frames to matrixes
     while (endless == True or roundsLeft >= 1):
         print('Round: {}/{}'.format(round, cycles))
         for frame in frameList:

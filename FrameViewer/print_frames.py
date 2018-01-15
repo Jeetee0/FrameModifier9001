@@ -44,7 +44,7 @@ def print_frame_list(cycles, mirror):
             if mirror:
                 frames_lib.print_32x32from16x16(frame)
             else:
-            	frames_lib.print_16x16(frame)
+                frames_lib.print_16x16(frame)
             time.sleep(delay)
         
         roundsLeft -= 1
@@ -63,25 +63,25 @@ if __name__ == "__main__":
     
     # if not, start process
     try:
-    	parser = argparse.ArgumentParser(description='2x2MatrixProject arguments',
+        parser = argparse.ArgumentParser(description='2x2MatrixProject arguments',
         	formatter_class=argparse.ArgumentDefaultsHelpFormatter)
     
-    	parser.add_argument('--cycles', type=int, default=1, help='how often shall the program run? 0 for endless')
-    	parser.add_argument('--delay', type=int, default=0, help='change delaytime (in ms)')
-    	parser.add_argument('--filename', type=str, default='frames.txt', help='which .txt file should be executed - standard: frames.txt')
-    	parser.add_argument('--msg', type=str, default='', help='message that gets displayed at the beginning')
-    	parser.add_argument('--mirror', type=bool, default=True, help='mirrors symbol from 16x16 to 32x32')
+        parser.add_argument('--cycles', type=int, default=1, help='how often shall the program run? 0 for endless')
+        parser.add_argument('--delay', type=int, default=0, help='change delaytime (in ms)')
+        parser.add_argument('--filename', type=str, default='frames.txt', help='which .txt file should be executed - standard: frames.txt')
+        parser.add_argument('--msg', type=str, default='', help='message that gets displayed at the beginning')
+        parser.add_argument('--mirror', type=bool, default=True, help='mirrors symbol from 16x16 to 32x32')
 
-    	args = parser.parse_args()  
-    	print ("arguments: {}".format(args))  
+        args = parser.parse_args()
+        print ("arguments: {}".format(args))
     
-    	try:
-        	if (args.msg != ''):
-            		frames_lib.printText(args.msg)
-        	read_frame_list(args.filename, args.delay)
-        	print_frame_list(args.cycles, args.mirror)
-    	except KeyboardInterrupt:
-        	pass
+        try:
+            if (args.msg != ''):
+                    frames_lib.printText(args.msg)
+            read_frame_list(args.filename, args.delay)
+            print_frame_list(args.cycles, args.mirror)
+        except KeyboardInterrupt:
+            pass
     # delete pid file again
     finally: 
         os.unlink(pidfile)
