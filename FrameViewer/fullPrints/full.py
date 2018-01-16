@@ -18,20 +18,23 @@ def readSettingsFile():
     height = int(file.readline())
     print ("printing in format: {}x{}").format(width, height)
 
-def SingleBottomTop(delay):
-    delayEach = delay/(height-1)
-    while (True):
-        x = random.randint(0, width-1)
-        for y in range (height, -1, -1):
-            with canvas(device) as draw:
-                draw.point((x, y), fill="white")
-                time.sleep(delayEach)
+def printFull():
+    while(True):
+        # switch between full printed screen and empty screen
+        with canvas(device) as draw:
+            for x in range(0, width):
+                for y in range (0, height):
+                    draw.point((x, y), fill="white")
+            time.sleep(delay)
+        with canvas(device) as draw:
+            time.sleep(delay)
+
 
 if __name__ == '__main__':
+
     readSettingsFile()
     parser = argparse.ArgumentParser()
-    parser.add_argument("--delay", help="delay between frames", type=int, default=200)
+    parser.add_argument("--delay", help="delay between frames", type=int, default=420)
     args = parser.parse_args()
-    delay = float(args.delay)/1000
-    print ("delay: {}").format(delay)
-    SingleBottomTop(delay)
+    delay = float(args.delay-30)/1000
+    printFull()
