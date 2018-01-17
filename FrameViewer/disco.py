@@ -1,35 +1,51 @@
+import argparse
+
 import frame_reader
 import frame_printer
 
-filename="txtFiles/frames.txt"
 
-delay = frame_reader.get_delay_from_file(filename)
-dimensions = frame_reader.get_size_of_frame(filename)
-frameList = frame_reader.read_frame_list(filename)
+def disco(args):
 
-print("printing now on {} LED's with delay: {}").format(dimensions, delay)
-frame_printer.print_frameList(frameList, dimensions, delay, True)
+    # defining variables for printing
+    path="txtFiles/" + args.filename
+    frameList = frame_reader.read_frame_list(path)
+    mirror = args.mirror
+    cycles = args.cycles
 
+    # if delay was not given in arguments the value from file is used.
+    if args.delay == 0:
+        delay = frame_reader.get_delay_from_file(path)
+    else:
+        delay = float(args.delay)/1000
 
-# for x in range(0, 32):
-#     for y in range (0, 8):
-#         with canvas(device) as draw:
-#             #print ("x: {}, y: {}".format(x,y))
-#             draw.point((x, y), fill="white")
-#             time.sleep(0.001)
-#
-# for y in range(0, 8):
-#     for x in range (0, 32):
-#         with canvas(device) as draw:
-#             #print ("x: {}, y: {}".format(x,y))
-#             draw.point((x, y), fill="white")
-#             time.sleep(0.001)
-#
-#
-# while (True):
-#     y = random.randint(0,8)
-#     for x in range (0, 32):
-#         with canvas(device) as draw:
-#             #print ("x: {}, y: {}".format(x,y))
-#             draw.point((x, y), fill="white")
-#             time.sleep(0.001)
+    dimensions = frame_reader.get_size_of_frame(path)
+    dimensionList = dimensions.split("x")
+    width = int(dimensionList[0])
+    height = int(dimensionList[1])
+
+    # start printing
+    if mirror:
+        print("printing now on {}x{} LED's with delay: {}").format(width*2, height*2, delay)
+    else:
+        print("printing now on {}x{} LED's with delay: {}").format(width, height, delay)
+
+    for n in range(cycles):
+        print ("round: {}/{}").format(n+1,cycles)
+        frame_printer.print_frameList(frameList, width, height, delay, mirror)
+
+def parseArguments():
+    # create argument parser
+    parser = argparse.ArgumentParser()
+
+    parser.add_argument("--cycles", default=1, type=int, help="define how often the process should be running (0 is endless)")
+    parser.add_argument("--delay", default=0, type=float, help="setting delay between frames (in ms)")
+    parser.add_argument("--filename", default="frames.txt", type=str, help="choose .txt file to print")
+    parser.add_argument("--mirror", default=False, type=bool, help="activates mirror mode, so your frame gets quadrupled")
+
+    args = parser.parse_args()
+    print ("arguments: {}").format(args)
+    return args
+
+if __name__ == '__main__':
+    args = parseArguments()
+    disco(args)
