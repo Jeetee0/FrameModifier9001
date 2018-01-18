@@ -10,7 +10,7 @@ from luma.core.legacy.font import proportional, CP437_FONT, TINY_FONT, SINCLAIR_
 # create matrix device
 serial = spi(port=0, device=0, gpio=noop())
 device = max7219(serial, cascaded=16, block_orientation=-90, rotate=0)
-deviceText = max7219(serial, cascaded=16, block_orientation=-90, rotate=0)
+deviceText = max7219(serial, cascaded=4, block_orientation=-90, rotate=0)
 
 
 def scrollText(message):

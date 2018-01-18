@@ -23,6 +23,9 @@ def disco(args):
     width = int(dimensionList[0])
     height = int(dimensionList[1])
 
+    if not args.msg == "":
+        frame_printer.scrollText(args.msg)
+    
     # start printing
     if mirror:
         print("printing now on {}x{} LED's with delay: {}").format(width*2, height*2, delay)
@@ -41,6 +44,7 @@ def parseArguments():
     parser.add_argument("--delay", default=0, type=float, help="setting delay between frames (in ms)")
     parser.add_argument("--filename", default="frames.txt", type=str, help="choose .txt file to print")
     parser.add_argument("--mirror", default=False, type=bool, help="activates mirror mode, so your frame gets quadrupled")
+    parser.add_argument("--msg", default="", type=str, help="message that gets displayed before printing pattern")
 
     args = parser.parse_args()
     print ("arguments: {}").format(args)
