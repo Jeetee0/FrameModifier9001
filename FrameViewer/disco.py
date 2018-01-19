@@ -1,5 +1,4 @@
 import argparse
-
 import frame_reader
 import frame_printer
 
@@ -25,7 +24,7 @@ def disco(args):
 
     if not args.msg == "":
         frame_printer.scrollText(args.msg)
-    
+
     # start printing
     if mirror:
         print("printing now on {}x{} LED's with delay: {}").format(width*2, height*2, delay)
