@@ -18,3 +18,8 @@ ifconfig wlan0 | grep "inet " | awk -F'[: ]+' '{ print $3 }' >> ipaddress.txt
 
 # execute python script to send ip to server
 python send_ip_address.py
+
+sleep 2
+
+# control led matrixes
+python showIp.py
